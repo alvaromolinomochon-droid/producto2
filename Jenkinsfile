@@ -6,13 +6,12 @@ pipeline {
   }
   stages {
     stage('Build imagen') {
-      steps {
-        sh '''
-          eval $(minikube docker-env)
-          docker build -t miapp:${BUILD_NUMBER} -t miapp:latest .
-        '''
-      }
-    }
+  steps {
+    sh '''
+      minikube image build -t miapp:latest .
+    '''
+  }
+}
     stage('Deploy en Kubernetes') {
       steps {
         sh '''

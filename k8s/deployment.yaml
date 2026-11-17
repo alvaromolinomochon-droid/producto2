@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: miapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: miapp }
+  template:
+    metadata:
+      labels: { app: miapp }
+    spec:
+      containers:
+      - name: miapp
+        image: miapp:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: miapp-svc
+spec:
+  type: NodePort
+  selector: { app: miapp }
+  ports:
+  - port: 80
+    targetPort: 5000
+    nodePort: NODEPORT_PLACEHOLDER
